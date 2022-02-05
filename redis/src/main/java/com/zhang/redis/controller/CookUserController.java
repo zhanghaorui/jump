@@ -1,6 +1,7 @@
 package com.zhang.redis.controller;
 
 import com.zhang.redis.common.core.JsonResult;
+import com.zhang.redis.entity.dto.UserDTO;
 import com.zhang.redis.entity.request.SaveAndUpdateUserRequest;
 import com.zhang.redis.entity.response.SaveOrUpdateUserDto;
 import com.zhang.redis.service.CookUserService;
@@ -25,6 +26,18 @@ public class CookUserController {
     @PostMapping("/saveOrUpdateUser")
     public JsonResult<SaveOrUpdateUserDto> saveOrUpdateUser(@RequestBody SaveAndUpdateUserRequest saveAndUpdateUserRequest) {
         SaveOrUpdateUserDto dto = cookUserService.saveOrUpdateUser(saveAndUpdateUserRequest);
+        return JsonResult.buildSuccess(dto);
+    }
+
+
+    /**
+     *  查询用户
+     * @param id
+     * @return
+     */
+    @PostMapping("/getUserInfoById")
+    public JsonResult<UserDTO> getUserInfoById (@RequestBody UserDTO id) {
+        UserDTO dto = cookUserService.getUserInfoById(id.getId());
         return JsonResult.buildSuccess(dto);
     }
 }
