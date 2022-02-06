@@ -22,6 +22,9 @@ import java.util.Objects;
 
 import static com.zhang.redis.constant.RedisKeyConstants.USER_INFO_PREFIX;
 
+/**
+ * @author Admin
+ */
 @Slf4j
 @Service
 public class CookUserServiceImpl implements CookUserService {
@@ -130,6 +133,7 @@ public class CookUserServiceImpl implements CookUserService {
             // 这个线程刚刚读到，还没有来得及把旧数据写入缓存里去
             UserDO cookbookUserDO = userDao.getById(id);
             if (Objects.isNull(cookbookUserDO)) {
+                // 给redis里扔个空值  查不到的数据无需在查
                 redisCache.set(userInfoKey, CacheSupport.EMPTY_CACHE, CacheSupport.generateCachePenetrationExpireSecond());
                 return null;
             }
@@ -153,6 +157,10 @@ public class CookUserServiceImpl implements CookUserService {
         String userJson = redisCache.get(userKey);
         log.info("从redis中取出的key:{},value:{}", userKey, userJson);
         if (!StringUtils.isEmpty(userJson)) {
+            if (Objects.equals(CacheSupport.EMPTY_CACHE,userJson)) {
+                // 防止缓存穿透
+                return new UserDTO();
+            }
             redisCache.expire(RedisKeyConstants.USER_INFO_PREFIX + id,
                     CacheSupport.generateCacheExpireSecond());
             return JsonUtil.json2Object(userJson,UserDTO.class);
