@@ -1,4 +1,4 @@
-package leetcode.invalidateIpAddress_1108;
+package leetcode.realcode.invalidateIpAddress_1108;
 
 
 /**

@@ -1,4 +1,4 @@
-package leetcode.isPalindrome_0125;
+package leetcode.realcode.isPalindrome_0125;
 
 import java.util.Locale;
 
