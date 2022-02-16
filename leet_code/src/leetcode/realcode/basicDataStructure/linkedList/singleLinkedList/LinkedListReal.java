@@ -86,6 +86,16 @@ public class LinkedListReal {
     }
 
 
+    private void addAtAfter(Node p, int value) {
+        if (p == null) {
+            return;
+        }
+        Node newNode = new Node(value,null);
+        newNode.next = p.next;
+        p.next = newNode;
+    }
+
+
     /**
      * 查找
      *
