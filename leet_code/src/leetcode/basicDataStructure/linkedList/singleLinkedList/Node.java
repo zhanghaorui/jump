@@ -1,4 +1,4 @@
-package leetcode.realcode.basicDataStructure.linkedList.singleLinkedList;
+package leetcode.basicDataStructure.linkedList.singleLinkedList;
 
 /**
  * @author 张浩锐
